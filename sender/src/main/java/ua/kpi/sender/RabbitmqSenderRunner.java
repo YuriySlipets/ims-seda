@@ -21,9 +21,9 @@ public class RabbitmqSenderRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        sender().send(7, RoutingInfo.TYPE_1);
+        sender().send(10, RoutingInfo.TYPE_1);
         sender().send(10, RoutingInfo.TYPE_2);
-        sender().send(23, RoutingInfo.TYPE_3);
+        sender().send(30, RoutingInfo.TYPE_3);
         context.close();
     }
 

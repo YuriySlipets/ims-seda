@@ -22,9 +22,10 @@
     </properties>
 
     <modules>
-        <module>receiver</module>
-        <module>sender</module>
         <module>common</module>
+        <module>receiver</module>
+        <module>seda-controller</module>
+        <module>sender</module>
     </modules>
 
     <dependencyManagement>
