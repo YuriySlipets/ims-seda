@@ -11,8 +11,15 @@ import ua.kpi.RoutingInfo;
 @SpringBootApplication
 public class RabbitmqSenderRunner implements CommandLineRunner {
 
+    private static final int TYPE_1_MESSAGES_PER_SECOND = 2;
+    private static final int TYPE_2_MESSAGES_PER_SECOND = 1;
+    private static final int TYPE_3_MESSAGES_PER_SECOND = 5;
+
     @Autowired
     AbstractApplicationContext context;
+
+    @Autowired
+    Sender sender;
 
     @Bean
     public Sender sender() {
@@ -21,9 +28,15 @@ public class RabbitmqSenderRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        sender().send(10, RoutingInfo.TYPE_1);
-        sender().send(10, RoutingInfo.TYPE_2);
-        sender().send(30, RoutingInfo.TYPE_3);
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            sender.sendShutdownSignal();
+        }));
+        while (!sender.isShutdownSignalReceived()) {
+            sender.send(TYPE_1_MESSAGES_PER_SECOND, RoutingInfo.TYPE_1);
+            sender.send(TYPE_2_MESSAGES_PER_SECOND, RoutingInfo.TYPE_2);
+            sender.send(TYPE_3_MESSAGES_PER_SECOND, RoutingInfo.TYPE_3);
+            Thread.sleep(1000);
+        }
         context.close();
     }
 

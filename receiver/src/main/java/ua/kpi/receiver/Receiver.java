@@ -5,6 +5,7 @@ import ua.kpi.RoutingInfo;
 public class Receiver implements Runnable {
 
     private static final int HEARTBEAT_INTERVAL_MILLIS = 1000;
+    private static final int PROCESSING_DELAY = 500;
     private final RoutingInfo routingInfo;
     private volatile Boolean isIdle = true;
     private volatile boolean isShutdownSignalReceived = false;
@@ -18,7 +19,7 @@ public class Receiver implements Runnable {
 
         System.out.format("Received message from '%s' destination: %s%n", routingInfo.getDestination(), message);
         System.out.println("Some time-consuming processing...");
-        Thread.sleep(2000);
+        Thread.sleep(PROCESSING_DELAY);
         System.out.println("Successfully finished message processing!");
 
         isIdle = true;

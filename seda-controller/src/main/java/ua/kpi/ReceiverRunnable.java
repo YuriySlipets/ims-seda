@@ -4,12 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class ReceiverRunner implements Runnable {
+public class ReceiverRunnable implements Runnable {
 
     private volatile Boolean shutdownHookReceived;
     private final RoutingInfo messageType;
 
-    public ReceiverRunner(final RoutingInfo messageType) {
+    public ReceiverRunnable(final RoutingInfo messageType) {
         this.shutdownHookReceived = false;
         this.messageType = messageType;
     }
